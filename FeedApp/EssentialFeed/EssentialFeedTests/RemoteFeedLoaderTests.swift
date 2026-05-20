@@ -69,12 +69,12 @@ final class RemoteFeedLoaderTests: XCTestCase {
         toCompleteWithError error: RemoteFeedLoader.Error,
         when action: @escaping () -> Void
     ) {
-        var capturedErrors = [RemoteFeedLoader.Error]()
+        var capturedErrors = [RemoteFeedLoader.Result]()
         sut.load() { capturedErrors.append($0) }
         
         action()
         
-        XCTAssertEqual(capturedErrors, [error])
+        XCTAssertEqual(capturedErrors, [.failure(error)])
     }
     
     private class HTTPClientSpy: HTTPClient {
