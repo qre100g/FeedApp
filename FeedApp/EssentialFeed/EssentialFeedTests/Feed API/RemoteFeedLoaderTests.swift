@@ -28,7 +28,7 @@ final class RemoteFeedLoaderTests: XCTestCase {
     func test_load_deliversErrorOnClientError() {
         let (sut, client) = makeSUT()
         
-        expect(sut, toCompleteWithResult: .failure(.connectivity)) {
+        expect(sut, toCompleteWithResult: failure(.connectivity)) {
             let error = NSError(domain: "test", code: 0)
             client.complete(withError: error)
         }
@@ -40,7 +40,7 @@ final class RemoteFeedLoaderTests: XCTestCase {
         let samples = [199, 201, 300, 400, 500]
         let data = makeJSON([])
         samples.enumerated().forEach { index, code in
-            expect(sut, toCompleteWithResult: .failure(.invalidData)) {
+            expect(sut, toCompleteWithResult: failure(.invalidData)) {
                 client.complete(withCode: code, data: data, at: index)
             }
         }
@@ -49,7 +49,7 @@ final class RemoteFeedLoaderTests: XCTestCase {
     func test_load_deliversErrorOn200HTTPResponseWithInvalidJSONData() {
         let (sut, client) = makeSUT()
         
-        expect(sut, toCompleteWithResult: .failure(.invalidData)) {
+        expect(sut, toCompleteWithResult: failure(.invalidData)) {
             let invalidJSON = Data("invalid json".utf8)
             client.complete(withCode: 200, data: invalidJSON)
         }
@@ -127,7 +127,7 @@ final class RemoteFeedLoaderTests: XCTestCase {
             switch (expectedResult, result) {
             case let (.success(expectedItems), .success(actualItems)):
                 XCTAssertEqual(expectedItems, actualItems, file: file, line: line)
-            case let (.failure(expectedError), .failure(actualError)):
+            case let (.failure(expectedError as RemoteFeedLoader.Error), .failure(actualError as RemoteFeedLoader.Error)):
                 XCTAssertEqual(expectedError, actualError)
             default:
                 XCTFail("Expected result \(expectedResult) got \(result) instead.", file: file, line: line)
@@ -138,6 +138,10 @@ final class RemoteFeedLoaderTests: XCTestCase {
         action()
         
         wait(for: [expectation], timeout: 1.0)
+    }
+    
+    private func failure(_ error: RemoteFeedLoader.Error) -> RemoteFeedLoader.Result {
+        .failure(error)
     }
     
     private func makeItem(
