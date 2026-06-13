@@ -29,7 +29,7 @@ final class URLSessionHTTPClientTests: XCTestCase {
     
     override func setUp() {
         super.setUp()
-
+        
         URLProtocolSpy.startInterceptingNetwork()
     }
     
@@ -40,9 +40,7 @@ final class URLSessionHTTPClientTests: XCTestCase {
     }
     
     func test_getFromURL_performsGETRequestWithURL() {
-        let url = URL(string: "https://any-url.com")!
-        let sut = URLSessionHTTPClient()
-        
+        let url = anyURL()
         let exp = expectation(description: "Wait for completion")
         URLProtocolSpy.observeRequests { request in
             XCTAssertEqual(request.url, url)
@@ -51,19 +49,17 @@ final class URLSessionHTTPClientTests: XCTestCase {
             exp.fulfill()
         }
         
-        sut.get(from: url) { _ in }
+        makeSUT().get(from: url) { _ in }
         wait(for: [exp], timeout: 1.0)
     }
-
+    
     func test_getFromURL_failsOnRequestError() {
-        let sut = URLSessionHTTPClient()
-        let url = URL(string: "https://any-url.com")!
-        let error = NSError(domain: "any error", code: 1)
         let exp = expectation(description: "Wait for completion")
         
+        let error = anyNSError()
         URLProtocolSpy.stub(data: nil, response: nil, error: error)
-
-        sut.get(from: url) { result in
+        
+        makeSUT().get(from: anyURL()) { result in
             switch result {
             case let .failure(receivedError as NSError):
                 XCTAssertEqual(receivedError.domain, error.domain)
@@ -80,6 +76,17 @@ final class URLSessionHTTPClientTests: XCTestCase {
     
     // MARK: - Helpers
     
+    private func makeSUT() -> URLSessionHTTPClient {
+        return URLSessionHTTPClient()
+    }
+    
+    private func anyURL() -> URL {
+        URL(string: "https://any-url.com")!
+    }
+    
+    private func anyNSError() -> NSError {
+        NSError(domain: "any error", code: 1)
+    }
     
     private class URLProtocolSpy: URLProtocol {
         
