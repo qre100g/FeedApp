@@ -34,7 +34,7 @@ final class URLSessionHTTPClientTests: XCTestCase {
         let error = NSError(domain: "any error", code: 1)
         let exp = expectation(description: "Wait for completion")
         
-        URLProtocolSpy.stub(url: url, error: error)
+        URLProtocolSpy.stub(data: nil, response: nil, error: error)
 
         sut.get(from: url) { result in
             switch result {
@@ -57,18 +57,20 @@ final class URLSessionHTTPClientTests: XCTestCase {
     
     private class URLProtocolSpy: URLProtocol {
         
-        static var stubs = [URL: NSError]()
+        private static var stub: Stub?
         
-        static func stub(url: URL, error: NSError) {
-            stubs[url] = error
+        private struct Stub {
+            let data: Data?
+            let response: HTTPURLResponse?
+            let error: Error?
+        }
+        
+        static func stub(data: Data?, response: HTTPURLResponse?, error: Error?) {
+            stub = Stub(data: data, response: response, error: error)
         }
         
         override class func canInit(with request: URLRequest) -> Bool {
-            guard let url = request.url else {
-                return false
-            }
-            
-            return stubs[url] != nil
+            return true
         }
         
         override class func canonicalRequest(for request: URLRequest) -> URLRequest {
@@ -76,7 +78,7 @@ final class URLSessionHTTPClientTests: XCTestCase {
         }
         
         override func startLoading() {
-            if let url = request.url, let error = URLProtocolSpy.stubs[url] {
+            if let error = URLProtocolSpy.stub?.error {
                 client?.urlProtocol(self, didFailWithError: error)
             }
             
