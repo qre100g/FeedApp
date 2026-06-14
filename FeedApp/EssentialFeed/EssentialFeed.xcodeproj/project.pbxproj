@@ -14,6 +14,7 @@
 		6248EA812FDD838F00010959 /* FeedItemMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6248EA802FDD838900010959 /* FeedItemMapper.swift */; };
 		628EDA092FBCE5DC001FFC9F /* RemoteFeedLoaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 628EDA082FBCE5DC001FFC9F /* RemoteFeedLoaderTests.swift */; };
 		628EDA0D2FBCE7A5001FFC9F /* RemoteFeedLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 628EDA0A2FBCE61C001FFC9F /* RemoteFeedLoader.swift */; };
+		62D581EC2FDEA56D00D0031F /* URLSessionHTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62D581EB2FDEA56200D0031F /* URLSessionHTTPClient.swift */; };
 		62EB8D702FDDDE1500940DB5 /* URLSessionHTTPClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62EB8D6F2FDDDDDD00940DB5 /* URLSessionHTTPClientTests.swift */; };
 /* End PBXBuildFile section */
 
@@ -39,6 +40,7 @@
 		628EDA072FBCE5DC001FFC9F /* EssentialFeedTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "EssentialFeedTests-Bridging-Header.h"; sourceTree = "<group>"; };
 		628EDA082FBCE5DC001FFC9F /* RemoteFeedLoaderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteFeedLoaderTests.swift; sourceTree = "<group>"; };
 		628EDA0A2FBCE61C001FFC9F /* RemoteFeedLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteFeedLoader.swift; sourceTree = "<group>"; };
+		62D581EB2FDEA56200D0031F /* URLSessionHTTPClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionHTTPClient.swift; sourceTree = "<group>"; };
 		62EB8D6F2FDDDDDD00940DB5 /* URLSessionHTTPClientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionHTTPClientTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -115,6 +117,7 @@
 		6248EA822FDD83AE00010959 /* Feed API */ = {
 			isa = PBXGroup;
 			children = (
+				62D581EB2FDEA56200D0031F /* URLSessionHTTPClient.swift */,
 				6248EA802FDD838900010959 /* FeedItemMapper.swift */,
 				628EDA0A2FBCE61C001FFC9F /* RemoteFeedLoader.swift */,
 				6248EA7E2FDD835A00010959 /* HTTPClient.swift */,
@@ -251,6 +254,7 @@
 				628EDA0D2FBCE7A5001FFC9F /* RemoteFeedLoader.swift in Sources */,
 				6248EA7F2FDD836500010959 /* HTTPClient.swift in Sources */,
 				080EDF0C21B6DAE800813479 /* FeedItem.swift in Sources */,
+				62D581EC2FDEA56D00D0031F /* URLSessionHTTPClient.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
