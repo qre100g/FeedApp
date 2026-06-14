@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 55;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -41,6 +41,10 @@
 		628EDA0A2FBCE61C001FFC9F /* RemoteFeedLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteFeedLoader.swift; sourceTree = "<group>"; };
 		62EB8D6F2FDDDDDD00940DB5 /* URLSessionHTTPClientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionHTTPClientTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		62D581E72FDEA43700D0031F /* Helpers */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Helpers; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		080EDEEE21B6DA7E00813479 /* Frameworks */ = {
@@ -121,6 +125,7 @@
 		6248EA832FDD8AE500010959 /* Feed API */ = {
 			isa = PBXGroup;
 			children = (
+				62D581E72FDEA43700D0031F /* Helpers */,
 				62EB8D6F2FDDDDDD00940DB5 /* URLSessionHTTPClientTests.swift */,
 				628EDA082FBCE5DC001FFC9F /* RemoteFeedLoaderTests.swift */,
 			);
@@ -170,6 +175,9 @@
 			);
 			dependencies = (
 				080EDEFD21B6DA7E00813479 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				62D581E72FDEA43700D0031F /* Helpers */,
 			);
 			name = EssentialFeedTests;
 			productName = EssentialFeedTests;
