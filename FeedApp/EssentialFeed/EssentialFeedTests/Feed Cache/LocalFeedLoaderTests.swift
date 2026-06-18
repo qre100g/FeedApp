@@ -64,7 +64,7 @@ class LocalFeedLoaderTests: XCTestCase {
 
         expect(sut, toCompleteWithError: insertionError, when: {
             store.completeDeletionSuccessfully()
-            store.completeInsertFeed(with: insertionError)
+            store.completeInsertion(with: insertionError)
         })
     }
     
@@ -73,7 +73,7 @@ class LocalFeedLoaderTests: XCTestCase {
         
         expect(sut, toCompleteWithError: nil, when: {
             store.completeDeletionSuccessfully()
-            store.completeInsertFeedSuccessfully()
+            store.completeInsertionSuccessfully()
         })
     }
     
@@ -99,7 +99,7 @@ class LocalFeedLoaderTests: XCTestCase {
         
         store.completeDeletionSuccessfully()
         sut = nil
-        store.completeInsertFeed(with: anyNSError())
+        store.completeInsertion(with: anyNSError())
         
         XCTAssertTrue(receivedErrors.isEmpty)
     }
@@ -186,12 +186,12 @@ class LocalFeedLoaderTests: XCTestCase {
             messages.append(.insert(items: items, timestamp: timestamp))
         }
         
-        func completeInsertFeed(with error: Error?, at index: Int = 0) {
+        func completeInsertion(with error: Error?, at index: Int = 0) {
             insertFeedCompletions[index](error)
         }
         
-        func completeInsertFeedSuccessfully() {
-            completeInsertFeed(with: nil)
+        func completeInsertionSuccessfully() {
+            completeInsertion(with: nil)
         }
     }
     
