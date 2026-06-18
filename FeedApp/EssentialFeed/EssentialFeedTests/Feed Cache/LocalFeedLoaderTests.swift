@@ -76,7 +76,7 @@ class LocalFeedLoaderTests: XCTestCase {
         XCTAssertEqual(store.insertFeedCallCount, 0)
     }
     
-    func test_save_requestInsterFeedOnDeletionSuccess() {
+    func test_save_requestInsertFeedOnDeletionSuccess() {
         let (sut, store) = makeSUT()
         
         let items = [uniqueItem(), uniqueItem()]
