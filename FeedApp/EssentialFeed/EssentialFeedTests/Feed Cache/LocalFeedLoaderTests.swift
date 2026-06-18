@@ -81,7 +81,7 @@ class LocalFeedLoaderTests: XCTestCase {
         let store = FeedStoreSpy()
         var sut: LocalFeedLoader? = LocalFeedLoader(store: store, currentDate: Date.init)
         
-        var receivedErrors = [Error?]()
+        var receivedErrors = [LocalFeedLoader.SaveResult]()
         sut?.save([uniqueItem()]) { receivedErrors.append($0) }
         
         sut = nil
@@ -94,7 +94,7 @@ class LocalFeedLoaderTests: XCTestCase {
         let store = FeedStoreSpy()
         var sut: LocalFeedLoader? = LocalFeedLoader(store: store, currentDate: Date.init)
         
-        var receivedErrors = [Error?]()
+        var receivedErrors = [LocalFeedLoader.SaveResult]()
         sut?.save([uniqueItem()]) { receivedErrors.append($0) }
         
         store.completeDeletionSuccessfully()
@@ -128,7 +128,7 @@ class LocalFeedLoaderTests: XCTestCase {
         let items = [uniqueItem(), uniqueItem()]
         let exp = expectation(description: "Wait for save completion")
         
-        var recievedError: Error?
+        var recievedError: LocalFeedLoader.SaveResult?
         sut.save(items) { error in
             recievedError = error
             exp.fulfill()
