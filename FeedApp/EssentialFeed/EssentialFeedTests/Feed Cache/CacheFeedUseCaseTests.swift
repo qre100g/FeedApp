@@ -1,5 +1,5 @@
 //
-//  LocalFeedLoaderTests.swift
+//  CacheFeedUseCaseTests.swift
 //  EssentialFeed
 //
 //  Created by Mukesh Kondreddy on 18/06/26.
@@ -8,7 +8,7 @@
 import XCTest
 import EssentialFeed
 
-class LocalFeedLoaderTests: XCTestCase {
+class CacheFeedUseCaseTests: XCTestCase {
     
     func test_init_doesNotDeleteCache() {
         let (_, store) = makeSUT()
