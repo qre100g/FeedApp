@@ -18,4 +18,6 @@ public protocol FeedStore {
         timestamp: Date,
         completion: @escaping InsertFeedCompletion
     )
+    
+    func retrieve()
 }
