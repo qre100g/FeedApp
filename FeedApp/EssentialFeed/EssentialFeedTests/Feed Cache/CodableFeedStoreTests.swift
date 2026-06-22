@@ -176,7 +176,7 @@ class CodableFeedStoreTests: XCTestCase {
         
         let insertionError = insert((feed, timestamp), to: sut)
         
-        XCTAssertNotNil(insertionError, "Expected error on insertion")
+        XCTAssertNotNil(insertionError, "Expected error on insertion to an invalid URL")
         expect(sut, toRetrieve: .empty)
     }
     
@@ -184,7 +184,7 @@ class CodableFeedStoreTests: XCTestCase {
         let sut = makeSUT()
         
         let deletionError = deleteCache(from: sut)
-        XCTAssertNil(deletionError)
+        XCTAssertNil(deletionError, "Expected no error on deleting the empty cache")
         
         expect(sut, toRetrieve: .empty)
     }
@@ -197,7 +197,7 @@ class CodableFeedStoreTests: XCTestCase {
         insert((feed, timestamp), to: sut)
         
         let deletionError = deleteCache(from: sut)
-        XCTAssertNil(deletionError)
+        XCTAssertNil(deletionError, "Expected no error on deleting the non-empty cache")
         
         expect(sut, toRetrieve: .empty)
     }
