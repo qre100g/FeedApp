@@ -134,14 +134,14 @@ class CodableFeedStoreTests: XCTestCase {
         storeURL: URL? = nil,
         file: StaticString = #filePath,
         line: UInt = #line
-    ) -> CodableFeedStore {
+    ) -> FeedStore {
         let sut = CodableFeedStore(storeURL: storeURL ?? testSpecificStoreURL())
         trackMemoryLeaks(sut, file: file, line: line)
         return sut
     }
     
     private func expect(
-        _ sut: CodableFeedStore,
+        _ sut: FeedStore,
         toRetrieveTwice expectedResult: RetrieveCachedFeedResult,
         file: StaticString = #filePath,
         line: UInt = #line
@@ -151,7 +151,7 @@ class CodableFeedStoreTests: XCTestCase {
     }
     
     private func expect(
-        _ sut: CodableFeedStore,
+        _ sut: FeedStore,
         toRetrieve expectedResult: RetrieveCachedFeedResult,
         file: StaticString = #filePath,
         line: UInt = #line
@@ -179,7 +179,7 @@ class CodableFeedStoreTests: XCTestCase {
     @discardableResult
     private func insert(
         _ cache: (feed: [LocalFeedImage], timestamp: Date),
-        to sut: CodableFeedStore
+        to sut: FeedStore
     ) -> Error? {
         let exp = expectation(description: "Wait for insertion to complete")
         var insertionError: Error?
@@ -194,7 +194,7 @@ class CodableFeedStoreTests: XCTestCase {
     }
     
     @discardableResult
-    private func deleteCache(from sut: CodableFeedStore) -> Error? {
+    private func deleteCache(from sut: FeedStore) -> Error? {
         let exp = expectation(description: "Wait for deletion completion")
         
         var receivedError: Error?
