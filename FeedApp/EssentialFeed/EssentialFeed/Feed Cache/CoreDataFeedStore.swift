@@ -5,7 +5,7 @@
 //  Created by Mukesh Kondreddy on 23/06/26.
 //
 
-import Foundation
+import CoreData
 
 public class CoreDataFeedStore: FeedStore {
     
