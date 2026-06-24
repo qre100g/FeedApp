@@ -114,7 +114,10 @@ private class ManagedFeedImage: NSManagedObject {
     @NSManaged var location: String?
     @NSManaged var cache: ManagedCache
     
-    static func images(from images: [LocalFeedImage], in context: NSManagedObjectContext) -> NSOrderedSet {
+    static func images(
+        from images: [LocalFeedImage],
+        in context: NSManagedObjectContext
+    ) -> NSOrderedSet {
         NSOrderedSet(array: images.map { local in
             let managedImage = ManagedFeedImage(context: context)
             managedImage.id = local.id
