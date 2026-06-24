@@ -14,6 +14,9 @@ class ManagedFeedImage: NSManagedObject {
     @NSManaged var imageDescription: String?
     @NSManaged var location: String?
     @NSManaged var cache: ManagedCache
+}
+
+extension ManagedFeedImage {
     
     static func images(
         from images: [LocalFeedImage],
@@ -37,4 +40,5 @@ class ManagedFeedImage: NSManagedObject {
             image: url
         )
     }
+
 }

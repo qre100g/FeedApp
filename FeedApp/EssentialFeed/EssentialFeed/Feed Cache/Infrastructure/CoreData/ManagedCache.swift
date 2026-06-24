@@ -11,7 +11,10 @@ import CoreData
 class ManagedCache: NSManagedObject {
     @NSManaged var timestamp: Date
     @NSManaged var feed: NSOrderedSet
-    
+}
+
+extension ManagedCache {
+
     static func newUniqueInstance(
         in context: NSManagedObjectContext
     ) throws -> ManagedCache {
@@ -30,4 +33,5 @@ class ManagedCache: NSManagedObject {
     var localFeed: [LocalFeedImage] {
         feed.compactMap { ($0 as? ManagedFeedImage)?.local }
     }
+
 }
