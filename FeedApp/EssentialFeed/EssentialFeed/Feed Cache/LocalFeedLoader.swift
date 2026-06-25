@@ -37,22 +37,27 @@ extension LocalFeedLoader {
     public typealias SaveResult = Error?
     
     public func save(_ images: [FeedImage], completion: @escaping (SaveResult) -> Void) {
-        store.deleteCachedFeed() { [weak self] error in
+        store.deleteCachedFeed() { [weak self] result in
             guard let self else { return }
             
-            if let error {
-                completion(error)
-            } else {
+            switch result {
+            case .success:
                 self.insert(images.toLocal(), completion: completion)
+
+            case let .failure(error):
+                completion(error)
             }
         }
     }
     
     private func insert(_ images: [LocalFeedImage], completion: @escaping (SaveResult) -> Void) {
-        store.insert(images, timestamp: currentDate()) { [weak self] error in
+        store.insert(images, timestamp: currentDate()) { [weak self] result in
             guard self != nil else { return }
             
-            completion(error)
+            switch result {
+            case .success: completion(nil)
+            case .failure(let error): completion(error)
+            }
         }
     }
 }
