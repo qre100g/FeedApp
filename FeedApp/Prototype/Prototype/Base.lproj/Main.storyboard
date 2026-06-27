@@ -16,7 +16,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="FeedCell" rowHeight="580" id="ODe-K6-MSg">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="FeedCell" rowHeight="580" id="ODe-K6-MSg" customClass="FeedImageCell" customModule="Prototype" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="50" width="393" height="580"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ODe-K6-MSg" id="xn3-Um-CDo">
@@ -86,6 +86,12 @@
                                         <constraint firstAttribute="trailing" secondItem="Hih-FW-sWG" secondAttribute="trailing" constant="20" id="g3K-pw-H1A"/>
                                     </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="descriptionLabel" destination="jHz-fL-kbi" id="5RV-q0-ReV"/>
+                                    <outlet property="feedImageView" destination="bmN-Mt-0uN" id="OKA-P8-jsh"/>
+                                    <outlet property="locationContainer" destination="B7z-hs-MII" id="b7p-Iw-j6N"/>
+                                    <outlet property="locationLabel" destination="Sjx-yH-48l" id="ou2-EB-0SL"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -97,7 +103,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5b9-nk-a2O" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-127.48091603053435" y="-547.18309859154931"/>
+            <point key="canvasLocation" x="-389" y="-547"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="G8V-gZ-p6T">
@@ -113,7 +119,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1QC-ig-NGS" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-924" y="-547"/>
+            <point key="canvasLocation" x="-1218" y="-547"/>
         </scene>
     </scenes>
     <resources>
