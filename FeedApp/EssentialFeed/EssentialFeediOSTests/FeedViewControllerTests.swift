@@ -140,12 +140,13 @@ final class FeedViewControllerTests: XCTestCase {
     
     private class FeedLoaderSpy: FeedLoader {
         
-        private(set) var loadCallCount: Int = 0
         private(set) var loadCompletions = [(FeedLoader.Result) -> Void]()
+        var loadCallCount: Int {
+            loadCompletions.count
+        }
         
         func load(completion: @escaping (FeedLoader.Result) -> Void) {
             loadCompletions.append(completion)
-            loadCallCount += 1
         }
         
         func simulateLoadCompletion() {
