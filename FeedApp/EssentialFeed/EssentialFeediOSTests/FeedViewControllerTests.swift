@@ -51,18 +51,14 @@ final class FeedViewControllerTests: XCTestCase {
     func test_onViewAppearing_callsLoadFeed() {
         let (sut, loader) = makeSUT()
         
-        sut.loadViewIfNeeded()
-        sut.beginAppearanceTransition(true, animated: false)
-        sut.endAppearanceTransition()
+        sut.simulateViewAppearance()
         
         XCTAssertEqual(loader.loadCallCount, 1)
     }
     
     func test_pullToRefresh_callsLoadFeed() {
         let (sut, loader) = makeSUT()
-        sut.loadViewIfNeeded()
-        sut.beginAppearanceTransition(true, animated: false)
-        sut.endAppearanceTransition()
+        sut.simulateViewAppearance()
         
         sut.refreshControl?.simulatePullToRefresh()
         XCTAssertEqual(loader.loadCallCount, 2)
@@ -73,16 +69,10 @@ final class FeedViewControllerTests: XCTestCase {
     
     func test_onViewAppearingTwice_doesNotLoadFeed() {
         let (sut, loader) = makeSUT()
-        
-        sut.loadViewIfNeeded()
-        sut.beginAppearanceTransition(true, animated: false)
-        sut.endAppearanceTransition()
-        
+        sut.simulateViewAppearance()
         XCTAssertEqual(loader.loadCallCount, 1)
         
-        sut.beginAppearanceTransition(true, animated: false)
-        sut.endAppearanceTransition()
-        
+        sut.simulateViewAppearance()
         XCTAssertEqual(loader.loadCallCount, 1)
     }
     
@@ -118,6 +108,17 @@ final class FeedViewControllerTests: XCTestCase {
         }
     }
 
+}
+
+private extension FeedViewController {
+    func simulateViewAppearance() {
+        if !isViewLoaded {
+            loadViewIfNeeded()
+        }
+
+        beginAppearanceTransition(true, animated: false)
+        endAppearanceTransition()
+    }
 }
 
 private extension UIRefreshControl {
