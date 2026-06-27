@@ -100,6 +100,12 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="NBa-5X-tMm"/>
+                    <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="fp9-Av-iH0">
+                        <autoresizingMask key="autoresizingMask"/>
+                        <connections>
+                            <action selector="refresh" destination="UMn-Lm-6Qh" eventType="valueChanged" id="tzF-0S-Rs8"/>
+                        </connections>
+                    </refreshControl>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5b9-nk-a2O" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
