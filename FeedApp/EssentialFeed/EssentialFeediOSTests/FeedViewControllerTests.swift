@@ -24,6 +24,7 @@ class FeedViewController: UITableViewController {
         refreshControl?.addTarget(self, action: #selector(refresh), for: .valueChanged)
         
         onViewAppearing = { vc in
+            vc.refreshControl?.beginRefreshing()
             vc.refresh()
             vc.onViewAppearing = nil
         }
@@ -76,6 +77,13 @@ final class FeedViewControllerTests: XCTestCase {
         XCTAssertEqual(loader.loadCallCount, 1)
     }
     
+    func test_onViewAppearing_showsLoadingIndicator() {
+        let (sut, _) = makeSUT()
+        sut.simulateViewAppearance()
+        
+        XCTAssertTrue(sut.refreshControl?.isRefreshing ?? false)
+    }
+    
     // MARK: - Helpers
     
     private func makeSUT(
@@ -114,10 +122,17 @@ private extension FeedViewController {
     func simulateViewAppearance() {
         if !isViewLoaded {
             loadViewIfNeeded()
+            updateRefreshControlWithFake()
         }
-
+        
         beginAppearanceTransition(true, animated: false)
         endAppearanceTransition()
+    }
+    
+    func updateRefreshControlWithFake() {
+        let fakeRefreshControl = FakeRefreshControl()
+        fakeRefreshControl.addTargets(from: refreshControl)
+        refreshControl = fakeRefreshControl
     }
 }
 
@@ -126,6 +141,35 @@ private extension UIRefreshControl {
         allTargets.forEach { target in
             actions(forTarget: target, forControlEvent: .valueChanged)?.forEach {
                 (target as NSObject).perform(Selector($0))
+            }
+        }
+    }
+}
+
+private class FakeRefreshControl: UIRefreshControl {
+    private var _isRefreshing: Bool = false
+    
+    override var isRefreshing: Bool {
+        get { _isRefreshing }
+        set { _isRefreshing = newValue }
+    }
+    
+    override func beginRefreshing() {
+        super.beginRefreshing()
+
+        _isRefreshing = true
+    }
+    
+    override func endRefreshing() {
+        super.endRefreshing()
+        
+        _isRefreshing = false
+    }
+    
+    func addTargets(from refreshControl: UIRefreshControl?) {
+        refreshControl?.allTargets.forEach { target in
+            refreshControl?.actions(forTarget: target, forControlEvent: .valueChanged)?.forEach {
+                addTarget(target, action: Selector($0), for: .valueChanged)
             }
         }
     }
