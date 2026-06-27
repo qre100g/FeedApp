@@ -59,14 +59,14 @@ final class FeedViewControllerTests: XCTestCase {
         XCTAssertEqual(loader.loadCallCount, 1)
     }
     
-    func test_pullToRefresh_callsLoadFeed() {
+    func test_userInitiatedFeedReload_callsLoadFeed() {
         let (sut, loader) = makeSUT()
         sut.simulateViewAppearance()
         
-        sut.refreshControl?.simulatePullToRefresh()
+        sut.simulateUserInitiatedFeedReload()
         XCTAssertEqual(loader.loadCallCount, 2)
         
-        sut.refreshControl?.simulatePullToRefresh()
+        sut.simulateUserInitiatedFeedReload()
         XCTAssertEqual(loader.loadCallCount, 3)
     }
     
@@ -86,11 +86,11 @@ final class FeedViewControllerTests: XCTestCase {
         XCTAssertTrue(sut.refreshControl?.isRefreshing ?? false)
     }
     
-    func test_pullToRefresh_showsLoadingIndicator() {
+    func test_userInitiatedFeedReload_showsLoadingIndicator() {
         let (sut, _) = makeSUT()
         sut.simulateViewAppearance()
         
-        sut.refreshControl?.simulatePullToRefresh()
+        sut.simulateUserInitiatedFeedReload()
         XCTAssertTrue(sut.refreshControl?.isRefreshing ?? false)
     }
     
@@ -104,10 +104,10 @@ final class FeedViewControllerTests: XCTestCase {
         XCTAssertFalse(sut.refreshControl?.isRefreshing ?? false)
     }
     
-    func test_pullToRefresh_hidesLoadingIndicatorOnLoadCompletion() {
+    func test_userInitiatedFeedReload_hidesLoadingIndicatorOnLoadCompletion() {
         let (sut, loader) = makeSUT()
         sut.simulateViewAppearance()
-        sut.refreshControl?.simulatePullToRefresh()
+        sut.simulateUserInitiatedFeedReload()
         XCTAssertTrue(sut.refreshControl?.isRefreshing ?? false)
         
         loader.simulateLoadCompletion()
@@ -171,6 +171,10 @@ private extension FeedViewController {
         let fakeRefreshControl = FakeRefreshControl()
         fakeRefreshControl.addTargets(from: refreshControl)
         refreshControl = fakeRefreshControl
+    }
+    
+    func simulateUserInitiatedFeedReload() {
+        refreshControl?.simulatePullToRefresh()
     }
 }
 
