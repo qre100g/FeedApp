@@ -41,7 +41,7 @@ final class FeedViewControllerTests: XCTestCase {
     
     // MARK: - Helpers
     
-    func makeSUT(
+    private func makeSUT(
         file: StaticString = #filePath,
         line: UInt = #line
     ) -> (sut: FeedViewController, loader: FeedLoaderSpy) {
@@ -52,7 +52,7 @@ final class FeedViewControllerTests: XCTestCase {
         return (sut, loader)
     }
     
-    func trackMemoryLeaks(
+    private func trackMemoryLeaks(
         _ instance: AnyObject,
         file: StaticString = #filePath,
         line: UInt = #line
@@ -62,9 +62,9 @@ final class FeedViewControllerTests: XCTestCase {
         }
     }
     
-    class FeedLoaderSpy: FeedLoader {
+    private class FeedLoaderSpy: FeedLoader {
         
-        var loadCallCount: Int = 0
+        private(set) var loadCallCount: Int = 0
         
         func load(completion: @escaping (FeedLoader.Result) -> Void) {
             loadCallCount += 1
