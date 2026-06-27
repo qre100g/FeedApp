@@ -26,15 +26,13 @@ class FeedViewController: UIViewController {
 final class FeedViewControllerTests: XCTestCase {
 
     func test_init_doesNotLoadFeed() {
-        let loader = FeedLoaderSpy()
-        _ = FeedViewController(loader: loader)
+        let (_, loader) = makeSUT()
         
         XCTAssertEqual(loader.loadCallCount, 0)
     }
     
     func test_viewDidLoad_callsLoadFeed() {
-        let loader = FeedLoaderSpy()
-        let sut = FeedViewController(loader: loader)
+        let (sut, loader) = makeSUT()
         
         sut.loadViewIfNeeded()
         
@@ -42,6 +40,27 @@ final class FeedViewControllerTests: XCTestCase {
     }
     
     // MARK: - Helpers
+    
+    func makeSUT(
+        file: StaticString = #filePath,
+        line: UInt = #line
+    ) -> (sut: FeedViewController, loader: FeedLoaderSpy) {
+        let loader = FeedLoaderSpy()
+        let sut = FeedViewController(loader: loader)
+        trackMemoryLeaks(loader, file: file, line: line)
+        trackMemoryLeaks(sut, file: file, line: line)
+        return (sut, loader)
+    }
+    
+    func trackMemoryLeaks(
+        _ instance: AnyObject,
+        file: StaticString = #filePath,
+        line: UInt = #line
+    ) {
+        addTeardownBlock { [weak instance] in
+            XCTAssertNil(instance, "Instance should be deallocated", file: file, line: line)
+        }
+    }
     
     class FeedLoaderSpy: FeedLoader {
         
