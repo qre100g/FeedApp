@@ -9,7 +9,8 @@ import XCTest
 import EssentialFeed
 
 class FeedViewController: UITableViewController {
-    var loader: FeedLoader?
+    private var loader: FeedLoader?
+    private var onViewAppearing: ((FeedViewController) -> Void)?
 
     convenience init(loader: FeedLoader) {
         self.init()
@@ -21,12 +22,17 @@ class FeedViewController: UITableViewController {
         
         refreshControl = UIRefreshControl()
         refreshControl?.addTarget(self, action: #selector(refresh), for: .valueChanged)
+        
+        onViewAppearing = { vc in
+            vc.refresh()
+            vc.onViewAppearing = nil
+        }
     }
     
     override func viewIsAppearing(_ animated: Bool) {
         super.viewIsAppearing(animated)
         
-        refresh()
+        onViewAppearing?(self)
     }
     
     @objc func refresh() {
@@ -63,6 +69,21 @@ final class FeedViewControllerTests: XCTestCase {
         
         sut.refreshControl?.simulatePullToRefresh()
         XCTAssertEqual(loader.loadCallCount, 3)
+    }
+    
+    func test_onViewAppearingTwice_doesNotLoadFeed() {
+        let (sut, loader) = makeSUT()
+        
+        sut.loadViewIfNeeded()
+        sut.beginAppearanceTransition(true, animated: false)
+        sut.endAppearanceTransition()
+        
+        XCTAssertEqual(loader.loadCallCount, 1)
+        
+        sut.beginAppearanceTransition(true, animated: false)
+        sut.endAppearanceTransition()
+        
+        XCTAssertEqual(loader.loadCallCount, 1)
     }
     
     // MARK: - Helpers
