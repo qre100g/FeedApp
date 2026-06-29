@@ -151,11 +151,7 @@ final class FeedViewControllerTests: XCTestCase {
             loadCompletions.append(completion)
         }
         
-        func completeFeedLoading(at index: Int = 0) {
-            loadCompletions[index](.success([]))
-        }
-        
-        func completeFeedLoading(with images: [FeedImage], at index: Int = 0) {
+        func completeFeedLoading(with images: [FeedImage] = [], at index: Int = 0) {
             loadCompletions[index](.success(images))
         }
         
