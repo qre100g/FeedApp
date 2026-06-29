@@ -77,6 +77,23 @@ final class FeedViewControllerTests: XCTestCase {
         assertThat(sut, isRendering: [image])
     }
     
+    func test_feedImageView_loadsImageURLWhenVisible() {
+        let image0 = makeImage(url: URL(string: "https://url-0.com")!)
+        let image1 = makeImage(url: URL(string: "https://url-1.com")!)
+        let (sut, loader) = makeSUT()
+        
+        sut.simulateViewAppearance()
+        loader.completeFeedLoading(with: [image0, image1], at: 0)
+        
+        XCTAssertEqual(loader.loadedImageURLs, [], "Expected no image URL requests until view becomes visible")
+        
+        sut.simulateFeedImageViewVisible(at: 0)
+        XCTAssertEqual(loader.loadedImageURLs, [image0.url], "Expected first image URL request once first view becomes visible")
+        
+        sut.simulateFeedImageViewVisible(at: 1)
+        XCTAssertEqual(loader.loadedImageURLs, [image0.url, image1.url], "Expected second image URL request once second view also becomes visible")
+    }
+    
     // MARK: - Helpers
     
     private func makeSUT(
@@ -84,7 +101,7 @@ final class FeedViewControllerTests: XCTestCase {
         line: UInt = #line
     ) -> (sut: FeedViewController, loader: FeedLoaderSpy) {
         let loader = FeedLoaderSpy()
-        let sut = FeedViewController(loader: loader)
+        let sut = FeedViewController(feedLoader: loader, imageLoader: loader)
         trackMemoryLeaks(loader, file: file, line: line)
         trackMemoryLeaks(sut, file: file, line: line)
         return (sut, loader)
@@ -126,8 +143,12 @@ final class FeedViewControllerTests: XCTestCase {
         XCTAssertEqual(cell.descriptionText, image.description, file: file, line: line)
     }
     
-    private func makeImage(description: String? = nil, location: String? = nil) -> FeedImage {
-        FeedImage(id: UUID(), description: description, location: location, url: URL(string: "https://any-url.com")!)
+    private func makeImage(
+        description: String? = nil,
+        location: String? = nil,
+        url: URL = URL(string: "https://any-url.com")!
+    ) -> FeedImage {
+        FeedImage(id: UUID(), description: description, location: location, url: url)
     }
     
     private func trackMemoryLeaks(
@@ -140,9 +161,12 @@ final class FeedViewControllerTests: XCTestCase {
         }
     }
     
-    private class FeedLoaderSpy: FeedLoader {
+    private class FeedLoaderSpy: FeedLoader, FeedImageDataLoader {
+        
+        // MARK: - FeedLoader
         
         private(set) var loadCompletions = [(FeedLoader.Result) -> Void]()
+        
         var loadCallCount: Int {
             loadCompletions.count
         }
@@ -158,6 +182,14 @@ final class FeedViewControllerTests: XCTestCase {
         func completeFeedLoadingWithError(at index: Int = 0) {
             let error = NSError(domain: "any-domain", code: 0)
             loadCompletions[index](.failure(error))
+        }
+        
+        // MARK: - FeedImageDataLoader
+        
+        private(set) var loadedImageURLs = [URL]()
+        
+        func loadImageData(from url: URL) {
+            loadedImageURLs.append(url)
         }
     }
 
@@ -201,6 +233,10 @@ private extension FeedViewController {
     
     var feedImagesSection: Int {
         0
+    }
+    
+    func simulateFeedImageViewVisible(at index: Int = 0) {
+        _ = feedImageView(at: index)
     }
 }
 
