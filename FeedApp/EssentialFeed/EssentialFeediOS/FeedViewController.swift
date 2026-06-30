@@ -97,16 +97,25 @@ public class FeedViewController: UITableViewController, UITableViewDataSourcePre
         didEndDisplaying cell: UITableViewCell,
         forRowAt indexPath: IndexPath
     ) {
-        tasks[indexPath]?.cancel()
+        canceTask(forRowAt: indexPath)
     }
     
     // MARK: - UITableViewDataSourcePrefetching
 
     public func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
-        indexPaths.forEach {
-            let model = tableModel[$0.row]
-            _ = imageLoader?.loadImageData(from: model.url) { _ in }
+        indexPaths.forEach { indexPath in
+            let model = tableModel[indexPath.row]
+            tasks[indexPath] = imageLoader?.loadImageData(from: model.url) { _ in }
         }
+    }
+    
+    public func tableView(_ tableView: UITableView, cancelPrefetchingForRowsAt indexPaths: [IndexPath]) {
+        indexPaths.forEach(canceTask)
+    }
+    
+    private func canceTask(forRowAt indexPath: IndexPath) {
+        tasks[indexPath]?.cancel()
+        tasks[indexPath] = nil
     }
 
 }
