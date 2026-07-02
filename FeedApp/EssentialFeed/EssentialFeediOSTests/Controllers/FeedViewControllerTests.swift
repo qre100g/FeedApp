@@ -376,36 +376,6 @@ final class FeedViewControllerTests: XCTestCase {
 
 }
 
-private extension FeedImageCell {
-    var locationText: String? {
-        locationLabel.text
-    }
-    
-    var descriptionText: String? {
-        descriptionLabel.text
-    }
-    
-    var isShowingLocation: Bool {
-        locationContainer.isHidden == false
-    }
-    
-    var isShowingImageLoadingIndicator: Bool {
-        feedImageContainer.isShimmering
-    }
-    
-    var renderedImage: Data? {
-        feedImageView.image?.pngData()
-    }
-    
-    var isShowingRetryAction: Bool {
-        feedImageRetryButton.isHidden == false
-    }
-    
-    func simulateRetryAction() {
-        feedImageRetryButton.simulateTap()
-    }
-}
-
 class FakeRefreshControl: UIRefreshControl {
     private var _isRefreshing: Bool = false
     
