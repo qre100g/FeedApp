@@ -471,11 +471,7 @@ private extension FeedImageCell {
     }
     
     func simulateRetryAction() {
-        feedImageRetryButton.allTargets.forEach { target in
-            feedImageRetryButton.actions(forTarget: target, forControlEvent: .touchUpInside)?.forEach {
-                (target as NSObject).perform(Selector($0))
-            }
-        }
+        feedImageRetryButton.simulateTap()
     }
 }
 
