@@ -8,6 +8,7 @@
 import EssentialFeed
 
 final class FeedViewModel {
+    typealias Observer<T> = (T) -> Void
     
     private let feedLoader: FeedLoader
     
@@ -15,8 +16,8 @@ final class FeedViewModel {
         self.feedLoader = feedLoader
     }
     
-    var onFeedLoad: (([FeedImage]) -> Void)?
-    var onLoadStatusChange: ((Bool) -> Void)?
+    var onFeedLoad: Observer<[FeedImage]>?
+    var onLoadStatusChange: Observer<Bool>?
     
     func loadFeed() {
         onLoadStatusChange?(true)
