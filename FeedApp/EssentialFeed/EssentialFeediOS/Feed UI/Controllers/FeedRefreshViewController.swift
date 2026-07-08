@@ -14,10 +14,10 @@ public final class FeedRefreshViewController: NSObject, FeedLoadingView {
         }
     }
     
-    private let presenter: FeedPresenter
+    private let loadFeed: () -> Void
     
-    init(presenter: FeedPresenter) {
-        self.presenter = presenter
+    init(loadFeed: @escaping () -> Void) {
+        self.loadFeed = loadFeed
         super.init()
         bindView()
     }
@@ -35,7 +35,7 @@ public final class FeedRefreshViewController: NSObject, FeedLoadingView {
     }
     
     @objc func refresh() {
-        presenter.loadFeed()
+        loadFeed()
     }
     
 }
