@@ -15,27 +15,34 @@ public final class FeedUIComposer {
         feedLoader: FeedLoader,
         imageLoader: FeedImageDataLoader
     ) -> FeedViewController {
-        let feedViewModel = FeedViewModel(feedLoader: feedLoader)
-        let refreshController = FeedRefreshViewController(viewModel: feedViewModel)
+        let feedPresenter = FeedPresenter(feedLoader: feedLoader)
+        let refreshController = FeedRefreshViewController(presenter: feedPresenter)
+        feedPresenter.feedLoadingView = refreshController
         let feedController = FeedViewController(refreshController: refreshController)
-        feedViewModel.onFeedLoad = adaptFeedToCellControllers(forwardingTo: feedController, loader: imageLoader)
+        feedPresenter.feedView = FeedViewAdapter(controller: feedController, loader: imageLoader)
         return feedController
     }
+}
+
+private final class FeedViewAdapter: FeedView {
     
-    private static func adaptFeedToCellControllers(
-        forwardingTo controller: FeedViewController,
-        loader: FeedImageDataLoader
-    ) -> (([FeedImage]) -> Void) {
-        return { [weak controller] feed in
-            controller?.tableModel = feed.map { model in
-                FeedImageCellController(
-                    model: FeedImageViewModel(
-                        model: model,
-                        imageLoader: loader,
-                        imageTransformer: UIImage.init
-                    )
+    private weak var controller: FeedViewController?
+    private let loader: FeedImageDataLoader
+    
+    init(controller: FeedViewController?, loader: FeedImageDataLoader) {
+        self.controller = controller
+        self.loader = loader
+    }
+    
+    func display(feed: [FeedImage]) {
+        controller?.tableModel = feed.map { model in
+            FeedImageCellController(
+                model: FeedImageViewModel(
+                    model: model,
+                    imageLoader: loader,
+                    imageTransformer: UIImage.init
                 )
-            }
+            )
         }
     }
 }
