@@ -16,7 +16,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="FeedCell" rowHeight="580" id="QTY-fI-7U0" customClass="FeedImageCell" customModule="EssentialFeediOS" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="FeedImageCell" rowHeight="580" id="QTY-fI-7U0" customClass="FeedImageCell" customModule="EssentialFeediOS" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="50" width="393" height="580"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="QTY-fI-7U0" id="oYx-JL-a1Q">
@@ -63,6 +63,9 @@
                                                             <buttonConfiguration key="configuration" style="plain" title="Retry">
                                                                 <fontDescription key="titleFontDescription" type="system" pointSize="50"/>
                                                             </buttonConfiguration>
+                                                            <connections>
+                                                                <action selector="retryButtonTapped" destination="QTY-fI-7U0" eventType="touchUpInside" id="kLQ-cY-nN1"/>
+                                                            </connections>
                                                         </button>
                                                     </subviews>
                                                     <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -108,6 +111,14 @@
                                         <constraint firstAttribute="trailing" secondItem="lZW-Di-zhh" secondAttribute="trailing" constant="20" id="rTv-aF-8SM"/>
                                     </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="descriptionLabel" destination="t8o-gL-MjE" id="coZ-z6-EBM"/>
+                                    <outlet property="feedImageContainer" destination="Ynk-SS-FRn" id="zCf-OL-Pii"/>
+                                    <outlet property="feedImageRetryButton" destination="Yik-ax-mRx" id="19z-yc-W9V"/>
+                                    <outlet property="feedImageView" destination="tA5-me-JKa" id="p9v-9j-5EH"/>
+                                    <outlet property="locationContainer" destination="KK2-IG-swb" id="yws-sf-tx5"/>
+                                    <outlet property="locationLabel" destination="ZdF-N9-p1H" id="bP9-ve-WDv"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
