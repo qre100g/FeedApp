@@ -28,7 +28,7 @@ extension FeedViewController {
         let fakeRefreshControl = FakeRefreshControl()
         fakeRefreshControl.addTargets(from: refreshControl)
         refreshControl = fakeRefreshControl
-        refreshController?.view = fakeRefreshControl
+        refreshController?.refreshView = fakeRefreshControl
     }
     
     func simulateUserInitiatedFeedReload() {
