@@ -19,7 +19,7 @@ public final class FeedUIComposer {
             loader: MainQueueDispatchDecorator(decoratee: feedLoader)
         )
         
-        let feedController = FeedViewController.makeWith(delegate: presentationAdapter, title: FeedPresenter.title)
+        let feedController = makeFeedViewController(delegate: presentationAdapter, title: FeedPresenter.title)
         
         let presenter = FeedPresenter(
             feedView: FeedViewAdapter(controller: feedController, loader: MainQueueDispatchDecorator(decoratee: imageLoader)),
@@ -28,10 +28,11 @@ public final class FeedUIComposer {
         presentationAdapter.presenter = presenter
         return feedController
     }
-}
-
-extension FeedViewController {
-    static func makeWith(delegate: FeedViewControllerDelegate, title: String) -> FeedViewController {
+    
+    private static func makeFeedViewController(
+        delegate: FeedViewControllerDelegate,
+        title: String
+    ) -> FeedViewController {
         let bundle = Bundle(for: FeedViewController.self)
         let storyboard = UIStoryboard(name: "Feed", bundle: bundle)
         let feedController = storyboard.instantiateInitialViewController() as! FeedViewController
