@@ -12,19 +12,20 @@ final class FeedImageCell: UITableViewCell {
     @IBOutlet private(set) var locationLabel: UILabel!
     @IBOutlet private(set) var feedImageView: UIImageView!
     @IBOutlet private(set) var descriptionLabel: UILabel!
+    @IBOutlet private(set) var imageContainer: UIView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        feedImageView.alpha = 0
-        feedImageView.startShimmering()
+        imageContainer.alpha = 0
+        imageContainer.startShimmering()
     }
     
     override func prepareForReuse() {
         super.prepareForReuse()
         
-        feedImageView.alpha = 0
-        feedImageView.startShimmering()
+        imageContainer.alpha = 0
+        imageContainer.startShimmering()
     }
     
     func fadeIn(with image: UIImage?) {
@@ -35,10 +36,10 @@ final class FeedImageCell: UITableViewCell {
             delay: 0.3,
             options: [],
             animations: {
-                self.feedImageView.alpha = 1
+                self.imageContainer.alpha = 1
             }, completion: { completed in
                 if completed {
-                    self.feedImageView.stopShimmering()
+                    self.imageContainer.stopShimmering()
                 }
             })
     }

@@ -48,18 +48,29 @@
                                                         <constraint firstItem="abK-HS-Dct" firstAttribute="leading" secondItem="B7z-hs-MII" secondAttribute="leading" id="fc8-f6-CpL"/>
                                                     </constraints>
                                                 </stackView>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="bmN-Mt-0uN" userLabel="ImageView">
+                                                <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="K8x-Y7-q5N" userLabel="imageContainer">
                                                     <rect key="frame" x="0.0" y="75" width="353" height="353"/>
+                                                    <subviews>
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="bmN-Mt-0uN" userLabel="ImageView">
+                                                            <rect key="frame" x="0.0" y="0.0" width="353" height="353"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" secondItem="bmN-Mt-0uN" secondAttribute="height" multiplier="1:1" id="KH5-2V-Ahz"/>
+                                                            </constraints>
+                                                        </imageView>
+                                                    </subviews>
                                                     <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" secondItem="bmN-Mt-0uN" secondAttribute="height" multiplier="1:1" id="KH5-2V-Ahz"/>
+                                                        <constraint firstAttribute="trailing" secondItem="bmN-Mt-0uN" secondAttribute="trailing" id="F21-ju-MlY"/>
+                                                        <constraint firstItem="bmN-Mt-0uN" firstAttribute="top" secondItem="K8x-Y7-q5N" secondAttribute="top" id="duK-8a-uhz"/>
+                                                        <constraint firstAttribute="bottom" secondItem="bmN-Mt-0uN" secondAttribute="bottom" id="rdz-2u-LF4"/>
+                                                        <constraint firstItem="bmN-Mt-0uN" firstAttribute="leading" secondItem="K8x-Y7-q5N" secondAttribute="leading" id="u3w-er-Hpk"/>
                                                     </constraints>
                                                     <userDefinedRuntimeAttributes>
                                                         <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                                            <integer key="value" value="20"/>
+                                                            <integer key="value" value="25"/>
                                                         </userDefinedRuntimeAttribute>
                                                     </userDefinedRuntimeAttributes>
-                                                </imageView>
+                                                </view>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="6" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jHz-fL-kbi" userLabel="description">
                                                     <rect key="frame" x="0.0" y="438" width="353" height="122"/>
                                                     <string key="text">Description Description Description Description Description Description Description Description Description Description Description Description Description Description Description Description Description Description</string>
@@ -69,13 +80,13 @@
                                                 </label>
                                             </subviews>
                                             <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="K8x-Y7-q5N" secondAttribute="trailing" id="8T8-6S-0UL"/>
                                                 <constraint firstAttribute="trailing" secondItem="jHz-fL-kbi" secondAttribute="trailing" id="GaC-NW-PjM"/>
                                                 <constraint firstItem="B7z-hs-MII" firstAttribute="top" secondItem="Hih-FW-sWG" secondAttribute="top" id="Gb9-7j-9oP"/>
-                                                <constraint firstItem="bmN-Mt-0uN" firstAttribute="leading" secondItem="Hih-FW-sWG" secondAttribute="leading" id="Ipd-7A-NlQ"/>
                                                 <constraint firstItem="B7z-hs-MII" firstAttribute="leading" secondItem="Hih-FW-sWG" secondAttribute="leading" id="dDN-vt-eCZ"/>
-                                                <constraint firstAttribute="trailing" secondItem="bmN-Mt-0uN" secondAttribute="trailing" id="k9h-kL-aQ5"/>
                                                 <constraint firstItem="jHz-fL-kbi" firstAttribute="leading" secondItem="Hih-FW-sWG" secondAttribute="leading" id="kfn-7C-tdt"/>
                                                 <constraint firstAttribute="trailing" secondItem="B7z-hs-MII" secondAttribute="trailing" id="lJ2-i0-gQ4"/>
+                                                <constraint firstItem="K8x-Y7-q5N" firstAttribute="leading" secondItem="Hih-FW-sWG" secondAttribute="leading" id="t15-6t-w4q"/>
                                             </constraints>
                                         </stackView>
                                     </subviews>
@@ -89,6 +100,7 @@
                                 <connections>
                                     <outlet property="descriptionLabel" destination="jHz-fL-kbi" id="5RV-q0-ReV"/>
                                     <outlet property="feedImageView" destination="bmN-Mt-0uN" id="OKA-P8-jsh"/>
+                                    <outlet property="imageContainer" destination="K8x-Y7-q5N" id="rFy-Np-YRH"/>
                                     <outlet property="locationContainer" destination="B7z-hs-MII" id="b7p-Iw-j6N"/>
                                     <outlet property="locationLabel" destination="Sjx-yH-48l" id="ou2-EB-0SL"/>
                                 </connections>
@@ -101,6 +113,7 @@
                     </tableView>
                     <navigationItem key="navigationItem" id="NBa-5X-tMm"/>
                     <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="fp9-Av-iH0">
+                        <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <connections>
                             <action selector="refresh" destination="UMn-Lm-6Qh" eventType="valueChanged" id="tzF-0S-Rs8"/>
