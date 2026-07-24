@@ -34,6 +34,7 @@
 		62D581EC2FDEA56D00D0031F /* URLSessionHTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62D581EB2FDEA56200D0031F /* URLSessionHTTPClient.swift */; };
 		62D581F52FE0808600D0031F /* EssentialFeed.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 080EDEF121B6DA7E00813479 /* EssentialFeed.framework */; };
 		62E8E0D63013F1B00014856C /* FeedPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62E8E0D53013F1A80014856C /* FeedPresenterTests.swift */; };
+		62E8E0D83013FA9A0014856C /* Feed.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 62E8E0D73013FA9A0014856C /* Feed.xcstrings */; };
 		62EB8D702FDDDE1500940DB5 /* URLSessionHTTPClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62EB8D6F2FDDDDDD00940DB5 /* URLSessionHTTPClientTests.swift */; };
 /* End PBXBuildFile section */
 
@@ -121,6 +122,7 @@
 		62D581F12FE0808600D0031F /* EssentialFeedEndToEndTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EssentialFeedEndToEndTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		62D581FD2FE085FC00D0031F /* CI_macOS.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = CI_macOS.xctestplan; sourceTree = "<group>"; };
 		62E8E0D53013F1A80014856C /* FeedPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedPresenterTests.swift; sourceTree = "<group>"; };
+		62E8E0D73013FA9A0014856C /* Feed.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Feed.xcstrings; sourceTree = "<group>"; };
 		62EB8D6F2FDDDDDD00940DB5 /* URLSessionHTTPClientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionHTTPClientTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -331,6 +333,7 @@
 			isa = PBXGroup;
 			children = (
 				62E8E0D53013F1A80014856C /* FeedPresenterTests.swift */,
+				62E8E0D73013FA9A0014856C /* Feed.xcstrings */,
 			);
 			path = "Feed Presentation";
 			sourceTree = "<group>";
@@ -561,6 +564,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				62E8E0D83013FA9A0014856C /* Feed.xcstrings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
