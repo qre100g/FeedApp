@@ -6,7 +6,7 @@
 //
 
 import XCTest
-import EssentialFeediOS
+import EssentialFeed
 
 extension FeedUIIntegrationTests {
     
@@ -16,7 +16,7 @@ extension FeedUIIntegrationTests {
         line: UInt = #line
     ) -> String {
         let table = "Feed"
-        let bundle = Bundle(for: FeedViewController.self)
+        let bundle = Bundle(for: FeedPresenter.self)
         let value = bundle.localizedString(forKey: key, value: nil, table: table)
         
         if value == key {
