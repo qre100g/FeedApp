@@ -22,6 +22,7 @@
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2oX-pI-1xW">
                                     <rect key="frame" x="0.0" y="0.0" width="393" height="128"/>
+                                    <gestureRecognizers/>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
@@ -29,6 +30,7 @@
                             </subviews>
                             <viewLayoutGuide key="safeArea" id="SM7-YI-VvO"/>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            <gestureRecognizers/>
                             <constraints>
                                 <constraint firstItem="2oX-pI-1xW" firstAttribute="leading" secondItem="SM7-YI-VvO" secondAttribute="leading" id="EXo-wF-3cT"/>
                                 <constraint firstItem="SM7-YI-VvO" firstAttribute="bottom" secondItem="2oX-pI-1xW" secondAttribute="bottom" id="UIf-0z-5kW"/>
@@ -37,6 +39,7 @@
                             </constraints>
                             <connections>
                                 <outlet property="label" destination="2oX-pI-1xW" id="h6y-QG-Ryk"/>
+                                <outletCollection property="gestureRecognizers" destination="BN0-90-aIn" appends="YES" id="nRu-O5-2cx"/>
                             </connections>
                         </view>
                         <prototypes>
@@ -163,6 +166,11 @@
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NXv-GG-oxQ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="BN0-90-aIn">
+                    <connections>
+                        <action selector="hideMessageAnimated" destination="zKS-oO-Xfk" id="3JT-Ic-IeH"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="-389" y="-547"/>
         </scene>
