@@ -19,8 +19,25 @@
                         <view key="tableHeaderView" contentMode="scaleToFill" id="zKS-oO-Xfk" userLabel="ErrorVIew" customClass="ErrorView" customModule="EssentialFeediOS" customModuleProvider="target">
                             <rect key="frame" x="0.0" y="0.0" width="393" height="128"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2oX-pI-1xW">
+                                    <rect key="frame" x="0.0" y="0.0" width="393" height="128"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
                             <viewLayoutGuide key="safeArea" id="SM7-YI-VvO"/>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            <constraints>
+                                <constraint firstItem="2oX-pI-1xW" firstAttribute="leading" secondItem="SM7-YI-VvO" secondAttribute="leading" id="EXo-wF-3cT"/>
+                                <constraint firstItem="SM7-YI-VvO" firstAttribute="bottom" secondItem="2oX-pI-1xW" secondAttribute="bottom" id="UIf-0z-5kW"/>
+                                <constraint firstItem="2oX-pI-1xW" firstAttribute="top" secondItem="SM7-YI-VvO" secondAttribute="top" id="pH5-bp-5z0"/>
+                                <constraint firstItem="SM7-YI-VvO" firstAttribute="trailing" secondItem="2oX-pI-1xW" secondAttribute="trailing" id="rZd-7M-pBB"/>
+                            </constraints>
+                            <connections>
+                                <outlet property="label" destination="2oX-pI-1xW" id="h6y-QG-Ryk"/>
+                            </connections>
                         </view>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="FeedImageCell" rowHeight="580" id="QTY-fI-7U0" customClass="FeedImageCell" customModule="EssentialFeediOS" customModuleProvider="target">
