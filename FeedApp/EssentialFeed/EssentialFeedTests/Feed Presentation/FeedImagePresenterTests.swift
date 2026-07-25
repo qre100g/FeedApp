@@ -7,9 +7,42 @@
 
 import UIKit
 import XCTest
+import EssentialFeed
+
+struct FeedImageViewModel {
+    let location: String?
+    let description: String?
+    let image: Any?
+    let isLoading: Bool
+    let shouldRetry: Bool
+    
+    var hasLocation: Bool {
+        location != nil
+    }
+}
+
+protocol FeedImageView {
+    func display(_ model: FeedImageViewModel)
+}
 
 class FeedImagePresenter {
-    init(view: Any) {}
+    let view: FeedImageView
+
+    init(view: FeedImageView) {
+        self.view = view
+    }
+    
+    func didStartImageLoadingData(for model: FeedImage) {
+        view.display(
+            FeedImageViewModel(
+                location: model.location,
+                description: model.description,
+                image: nil,
+                isLoading: true,
+                shouldRetry: false
+            )
+        )
+    }
 }
 
 final class FeedImagePresenterTests: XCTestCase {
@@ -18,6 +51,21 @@ final class FeedImagePresenterTests: XCTestCase {
         let (_, view) = makeSUT()
         
         XCTAssertTrue(view.messages.isEmpty)
+    }
+    
+    func test_didStartImageLoadingData_displaysLoadingImage() {
+        let (sut, view) = makeSUT()
+        let image = uniqueImage()
+        
+        sut.didStartImageLoadingData(for: image)
+        
+        let message = view.messages.first
+        XCTAssertEqual(view.messages.count, 1)
+        XCTAssertEqual(message?.description, image.description)
+        XCTAssertEqual(message?.location, image.location)
+        XCTAssertEqual(message?.isLoading, true)
+        XCTAssertEqual(message?.shouldRetry, false)
+        XCTAssertNil(message?.image)
     }
     
     // MARK: - Helpers
@@ -34,8 +82,12 @@ final class FeedImagePresenterTests: XCTestCase {
         return (sut, view)
     }
     
-    class ViewSpy: UIView {
-        let messages = [Any]()
+    class ViewSpy: FeedImageView {
+        private(set) var messages = [FeedImageViewModel]()
+        
+        func display(_ model: FeedImageViewModel) {
+            messages.append(model)
+        }
     }
     
 }
