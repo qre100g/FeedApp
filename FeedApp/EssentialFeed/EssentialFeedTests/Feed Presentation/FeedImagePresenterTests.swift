@@ -5,74 +5,8 @@
 //  Created by Mukesh Kondreddy on 25/07/26.
 //
 
-import UIKit
 import XCTest
 import EssentialFeed
-
-struct FeedImageViewModel<Image> {
-    let location: String?
-    let description: String?
-    let image: Image?
-    let isLoading: Bool
-    let shouldRetry: Bool
-    
-    var hasLocation: Bool {
-        location != nil
-    }
-}
-
-protocol FeedImageView {
-    associatedtype Image
-    
-    func display(_ model: FeedImageViewModel<Image>)
-}
-
-class FeedImagePresenter<View: FeedImageView, Image> where View.Image == Image {
-    private let view: View
-    private let imageTransformer: (Data) -> Image?
-
-    init(view: View, imageTransformer: @escaping (Data) -> Image?) {
-        self.view = view
-        self.imageTransformer = imageTransformer
-    }
-    
-    func didStartImageLoadingData(for model: FeedImage) {
-        view.display(
-            FeedImageViewModel(
-                location: model.location,
-                description: model.description,
-                image: nil,
-                isLoading: true,
-                shouldRetry: false
-            )
-        )
-    }
-    
-    func didFinishLoadingImageData(with data: Data, for model: FeedImage) {
-        let image = imageTransformer(data)
-        view.display(
-            FeedImageViewModel(
-                location: model.location,
-                description: model.description,
-                image: image,
-                isLoading: false,
-                shouldRetry: image == nil
-            )
-        )
-    }
-    
-    func didFinishLoadingImageData(with error: Error, for model: FeedImage) {
-        view.display(
-            FeedImageViewModel(
-                location: model.location,
-                description: model.description,
-                image: nil,
-                isLoading: false,
-                shouldRetry: true
-            )
-        )
-    }
-}
 
 final class FeedImagePresenterTests: XCTestCase {
     

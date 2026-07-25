@@ -1,0 +1,73 @@
+//
+//  FeedImagePresenter.swift
+//  EssentialFeed
+//
+//  Created by Mukesh Kondreddy on 25/07/26.
+//
+
+import Foundation
+
+public struct FeedImageViewModel<Image> {
+    public let location: String?
+    public let description: String?
+    public let image: Image?
+    public let isLoading: Bool
+    public let shouldRetry: Bool
+    
+    public var hasLocation: Bool {
+        location != nil
+    }
+}
+
+public protocol FeedImageView {
+    associatedtype Image
+    
+    func display(_ model: FeedImageViewModel<Image>)
+}
+
+public final class FeedImagePresenter<View: FeedImageView, Image> where View.Image == Image {
+    private let view: View
+    private let imageTransformer: (Data) -> Image?
+
+    public init(view: View, imageTransformer: @escaping (Data) -> Image?) {
+        self.view = view
+        self.imageTransformer = imageTransformer
+    }
+    
+    public func didStartImageLoadingData(for model: FeedImage) {
+        view.display(
+            FeedImageViewModel(
+                location: model.location,
+                description: model.description,
+                image: nil,
+                isLoading: true,
+                shouldRetry: false
+            )
+        )
+    }
+    
+    public func didFinishLoadingImageData(with data: Data, for model: FeedImage) {
+        let image = imageTransformer(data)
+        view.display(
+            FeedImageViewModel(
+                location: model.location,
+                description: model.description,
+                image: image,
+                isLoading: false,
+                shouldRetry: image == nil
+            )
+        )
+    }
+    
+    public func didFinishLoadingImageData(with error: Error, for model: FeedImage) {
+        view.display(
+            FeedImageViewModel(
+                location: model.location,
+                description: model.description,
+                image: nil,
+                isLoading: false,
+                shouldRetry: true
+            )
+        )
+    }
+}
