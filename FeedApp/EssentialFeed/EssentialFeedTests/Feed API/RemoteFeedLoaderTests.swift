@@ -30,7 +30,7 @@ final class RemoteFeedLoaderTests: XCTestCase {
         
         expect(sut, toCompleteWithResult: failure(.connectivity)) {
             let error = NSError(domain: "test", code: 0)
-            client.complete(withError: error)
+            client.complete(with: error)
         }
     }
     
@@ -155,37 +155,5 @@ final class RemoteFeedLoaderTests: XCTestCase {
         let itemsJSON = ["items": items]
         let jsonData = try! JSONSerialization.data(withJSONObject: itemsJSON)
         return jsonData
-    }
-    
-    private class HTTPClientSpy: HTTPClient {
-        
-        var messages = [(url: URL, completion: (HTTPClient.Result) -> Void)]()
-        
-        var requestedURLs: [URL] {
-            messages.map { $0.url }
-        }
-        
-        private struct Task: HTTPClientTask {
-            func cancel() {}
-        }
-        
-        func get(from url: URL, completion: @escaping (HTTPClient.Result) -> Void) -> HTTPClientTask {
-            messages.append((url, completion))
-            return Task()
-        }
-        
-        func complete(withError error: Error, at index: Int = 0) {
-            messages[index].completion(.failure(error))
-        }
-        
-        func complete(withCode code: Int, data: Data, at index: Int = 0) {
-            let response = HTTPURLResponse(
-                url: requestedURLs[index],
-                statusCode: code,
-                httpVersion: nil,
-                headerFields: nil
-            )!
-            messages[index].completion(.success((data, response)))
-        }
     }
 }

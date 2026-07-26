@@ -150,6 +150,7 @@
 		629317162FED8E9400C9492D /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				HTTPClientSpy.swift,
 				SharedTestHelpers.swift,
 				"XCTTestCase+MemoryLeaks.swift",
 			);
@@ -158,6 +159,7 @@
 		62D581FC2FE0845800D0031F /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				HTTPClientSpy.swift,
 				SharedTestHelpers.swift,
 				"XCTTestCase+MemoryLeaks.swift",
 			);
