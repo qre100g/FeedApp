@@ -13,8 +13,8 @@
 		620377132FEAEB2B008FB516 /* CoreDataFeedStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 620377122FEAEB21008FB516 /* CoreDataFeedStoreTests.swift */; };
 		623DA2172FF06B5D00F327EA /* EssentialFeed.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 080EDEF121B6DA7E00813479 /* EssentialFeed.framework */; };
 		623DA2182FF06B5D00F327EA /* EssentialFeed.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 080EDEF121B6DA7E00813479 /* EssentialFeed.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		623F195E301527FB00F26027 /* FeedImageDataLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 623F1947301527FB00F26027 /* FeedImageDataLoader.swift */; };
 		623F19883015F1B200F26027 /* RemoteFeedImageDataLoaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 623F19873015F1A800F26027 /* RemoteFeedImageDataLoaderTests.swift */; };
+		623F19893015F87800F26027 /* FeedImageDataLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 623F1947301527FB00F26027 /* FeedImageDataLoader.swift */; };
 		6247CC352FE7241600F943E0 /* LoadFeedFromCacheUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6247CC342FE7240C00F943E0 /* LoadFeedFromCacheUseCaseTests.swift */; };
 		6247CC382FE724E200F943E0 /* FeedStoreSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6247CC372FE724DC00F943E0 /* FeedStoreSpy.swift */; };
 		6248EA7F2FDD836500010959 /* HTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6248EA7E2FDD835A00010959 /* HTTPClient.swift */; };
@@ -653,6 +653,7 @@
 				62DD882930149AAC00B420B0 /* FeedImagePresenter.swift in Sources */,
 				62E8E0E23013FDCD0014856C /* FeedErrorViewModel.swift in Sources */,
 				080EDF0C21B6DAE800813479 /* FeedItem.swift in Sources */,
+				623F19893015F87800F26027 /* FeedImageDataLoader.swift in Sources */,
 				62D581EC2FDEA56D00D0031F /* URLSessionHTTPClient.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -685,7 +686,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				623F195E301527FB00F26027 /* FeedImageDataLoader.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
