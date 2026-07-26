@@ -10,16 +10,10 @@ import EssentialFeed
 
 final class URLSessionHTTPClientTests: XCTestCase {
     
-    override func setUp() {
-        super.setUp()
-        
-        URLProtocolSpy.startInterceptingNetwork()
-    }
-    
     override func tearDown() {
         super.tearDown()
         
-        URLProtocolSpy.stopInterceptingNetwork()
+        URLProtocolSpy.removeStub()
     }
     
     func test_getFromURL_performsGETRequestWithURL() {
@@ -83,7 +77,10 @@ final class URLSessionHTTPClientTests: XCTestCase {
     // MARK: - Helpers
     
     private func makeSUT(file: StaticString = #filePath, line: UInt = #line) -> HTTPClient {
-        let sut = URLSessionHTTPClient()
+        let configuration = URLSessionConfiguration.ephemeral
+        configuration.protocolClasses = [URLProtocolSpy.self]
+        let session = URLSession(configuration: configuration)
+        let sut = URLSessionHTTPClient(session: session)
         trackMemoryLeaks(sut, file: file, line: line)
         return sut
     }
@@ -179,12 +176,7 @@ final class URLSessionHTTPClientTests: XCTestCase {
             stub = Stub(data: nil, response: nil, error: nil, requestObserver: observer)
         }
         
-        static func startInterceptingNetwork() {
-            URLProtocol.registerClass(URLProtocolSpy.self)
-        }
-        
-        static func stopInterceptingNetwork() {
-            URLProtocol.unregisterClass(URLProtocolSpy.self)
+        static func removeStub() {
             stub = nil
         }
         
