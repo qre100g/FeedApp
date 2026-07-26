@@ -41,7 +41,7 @@ final class RemoteFeedLoaderTests: XCTestCase {
         let data = makeJSON([])
         samples.enumerated().forEach { index, code in
             expect(sut, toCompleteWithResult: failure(.invalidData)) {
-                client.complete(withCode: code, data: data, at: index)
+                client.complete(withStatusCode: code, data: data, at: index)
             }
         }
     }
@@ -51,7 +51,7 @@ final class RemoteFeedLoaderTests: XCTestCase {
         
         expect(sut, toCompleteWithResult: failure(.invalidData)) {
             let invalidJSON = Data("invalid json".utf8)
-            client.complete(withCode: 200, data: invalidJSON)
+            client.complete(withStatusCode: 200, data: invalidJSON)
         }
     }
     
@@ -60,7 +60,7 @@ final class RemoteFeedLoaderTests: XCTestCase {
         
         let validEmptyJSON = makeJSON([])
         expect(sut, toCompleteWithResult: .success([])) {
-            client.complete(withCode: 200, data: validEmptyJSON)
+            client.complete(withStatusCode: 200, data: validEmptyJSON)
         }
     }
     
@@ -73,7 +73,7 @@ final class RemoteFeedLoaderTests: XCTestCase {
         
         let json = makeJSON([item1.json, item2.json])
         expect(sut, toCompleteWithResult: .success([item1.model, item2.model])) {
-            client.complete(withCode: 200, data: json)
+            client.complete(withStatusCode: 200, data: json)
         }
     }
     
@@ -86,7 +86,7 @@ final class RemoteFeedLoaderTests: XCTestCase {
         sut?.load() { capturedResults.append($0) }
         
         sut = nil
-        client.complete(withCode: 200, data: makeJSON([]))
+        client.complete(withStatusCode: 200, data: makeJSON([]))
         
         XCTAssertTrue(capturedResults.isEmpty)
     }

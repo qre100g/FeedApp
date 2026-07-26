@@ -51,7 +51,7 @@ final class RemoteFeedImageDataLoaderTests: XCTestCase {
         
         samples.enumerated().forEach { index, code in
             expect(sut, toCompleteWith: failure(.invalidData), when: {
-                client.complete(withCode: code, data: anyData(), at: index)
+                client.complete(withStatusCode: code, data: anyData(), at: index)
             })
         }
     }
@@ -61,7 +61,7 @@ final class RemoteFeedImageDataLoaderTests: XCTestCase {
         
         expect(sut, toCompleteWith: failure(.invalidData), when: {
             let emptyData = Data()
-            client.complete(withCode: 200, data: emptyData)
+            client.complete(withStatusCode: 200, data: emptyData)
         })
     }
     
@@ -70,7 +70,7 @@ final class RemoteFeedImageDataLoaderTests: XCTestCase {
         let data = anyData()
         
         expect(sut, toCompleteWith: .success(data), when: {
-            client.complete(withCode: 200, data: data)
+            client.complete(withStatusCode: 200, data: data)
         })
     }
     
@@ -95,8 +95,8 @@ final class RemoteFeedImageDataLoaderTests: XCTestCase {
         })
         task.cancel()
         
-        client.complete(withCode: 404, data: anyData())
-        client.complete(withCode: 200, data: nonEmptyData)
+        client.complete(withStatusCode: 404, data: anyData())
+        client.complete(withStatusCode: 200, data: nonEmptyData)
         client.complete(with: anyNSError())
         
         XCTAssertTrue(received.isEmpty, "Expected no received results after cancelling task")
@@ -110,7 +110,7 @@ final class RemoteFeedImageDataLoaderTests: XCTestCase {
         _ = sut?.loadImageData(from: anyURL()) { capturedResults.append($0) }
         
         sut = nil
-        client.complete(withCode: 200, data: anyData())
+        client.complete(withStatusCode: 200, data: anyData())
         
         XCTAssertTrue(capturedResults.isEmpty)
     }
