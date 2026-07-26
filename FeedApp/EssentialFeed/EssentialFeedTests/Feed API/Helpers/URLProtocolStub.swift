@@ -1,5 +1,5 @@
 //
-//  URLProtocolSpy.swift
+//  URLProtocolStub.swift
 //  EssentialFeed
 //
 //  Created by Mukesh Kondreddy on 26/07/26.
@@ -7,10 +7,10 @@
 
 import Foundation
 
-class URLProtocolSpy: URLProtocol {
+class URLProtocolStub: URLProtocol {
     
     private struct Stub {
-        let onStartLoading: (URLProtocolSpy) -> Void
+        let onStartLoading: (URLProtocolStub) -> Void
     }
     
     private static var _stub: Stub?
@@ -67,7 +67,7 @@ class URLProtocolSpy: URLProtocol {
     }
     
     override func startLoading() {
-        URLProtocolSpy.stub?.onStartLoading(self)
+        URLProtocolStub.stub?.onStartLoading(self)
     }
     
     override func stopLoading() {}

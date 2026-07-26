@@ -13,13 +13,13 @@ final class URLSessionHTTPClientTests: XCTestCase {
     override func tearDown() {
         super.tearDown()
         
-        URLProtocolSpy.removeStub()
+        URLProtocolStub.removeStub()
     }
     
     func test_getFromURL_performsGETRequestWithURL() {
         let url = anyURL()
         let exp = expectation(description: "Wait for completion")
-        URLProtocolSpy.observeRequests { request in
+        URLProtocolStub.observeRequests { request in
             XCTAssertEqual(request.url, url)
             XCTAssertEqual(request.httpMethod, "GET")
             
@@ -32,7 +32,7 @@ final class URLSessionHTTPClientTests: XCTestCase {
     
     func test_cancelGetFromURLTask_cancelsURLRequest() {
         var task: HTTPClientTask?
-        URLProtocolSpy.onStartLoading { task?.cancel() }
+        URLProtocolStub.onStartLoading { task?.cancel() }
         
         let receivedError = resultErrorFor(taskHandler: { task = $0 }) as? NSError
         
@@ -81,7 +81,7 @@ final class URLSessionHTTPClientTests: XCTestCase {
     
     private func makeSUT(file: StaticString = #filePath, line: UInt = #line) -> HTTPClient {
         let configuration = URLSessionConfiguration.ephemeral
-        configuration.protocolClasses = [URLProtocolSpy.self]
+        configuration.protocolClasses = [URLProtocolStub.self]
         let session = URLSession(configuration: configuration)
         let sut = URLSessionHTTPClient(session: session)
         trackMemoryLeaks(sut, file: file, line: line)
@@ -135,7 +135,7 @@ final class URLSessionHTTPClientTests: XCTestCase {
         file: StaticString = #filePath,
         line: UInt = #line
     ) -> HTTPClient.Result {
-        values.map { URLProtocolSpy.stub(data: $0, response: $1, error: $2) }
+        values.map { URLProtocolStub.stub(data: $0, response: $1, error: $2) }
 
         let sut = makeSUT(file: file, line: line)
         let exp = expectation(description: "Wait for completion")
