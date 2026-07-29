@@ -9,7 +9,7 @@ import XCTest
 import EssentialFeed
 
 protocol FeedImageDataStore {
-    typealias Result = Swift.Result<Data, Error>
+    typealias Result = Swift.Result<Data?, Error>
     
     func retrieve(dataForURL url: URL, completion: @escaping (Result) -> Void)
 }
@@ -22,6 +22,7 @@ class LocalFeedImageDataLoader {
     
     public enum Error: Swift.Error {
         case failed
+        case notFound
     }
     
     private let store: FeedImageDataStore
@@ -35,7 +36,12 @@ class LocalFeedImageDataLoader {
         completion: @escaping (FeedImageDataLoader.Result) -> Void
     ) -> FeedImageDataLoaderTask {
         store.retrieve(dataForURL: url) { result in
-            completion(.failure(Error.failed))
+            switch result {
+            case .failure:
+                completion(.failure(Error.failed))
+            case .success:
+                completion(.failure(Error.notFound))
+            }
         }
         return Task()
     }
@@ -66,6 +72,14 @@ final class LoadFeedImageDataLoaderTests: XCTestCase {
         }
     }
     
+    func test_loadImageDataFromURL_deliversNotFoundErrorOnNotFound() {
+        let (sut, store) = makeSUT()
+        
+        expect(sut, toCompleteWith: notFound()) {
+            store.complete(with: .none)
+        }
+    }
+    
     // MARK: - Helpers
     
     private func makeSUT(
@@ -81,6 +95,10 @@ final class LoadFeedImageDataLoaderTests: XCTestCase {
     
     private func failed() -> FeedImageDataLoader.Result {
         .failure(LocalFeedImageDataLoader.Error.failed)
+    }
+    
+    private func notFound() -> FeedImageDataLoader.Result {
+        .failure(LocalFeedImageDataLoader.Error.notFound)
     }
     
     private func expect(
@@ -127,6 +145,10 @@ final class LoadFeedImageDataLoaderTests: XCTestCase {
         
         func completeRetrieval(with error: Error, at index: Int = 0) {
             completions[index](.failure(error))
+        }
+        
+        func complete(with data: Data?, at index: Int = 0) {
+            completions[index](.success(data))
         }
         
     }
