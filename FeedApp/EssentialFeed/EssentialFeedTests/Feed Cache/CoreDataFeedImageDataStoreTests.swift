@@ -8,18 +8,6 @@
 import XCTest
 import EssentialFeed
 
-extension CoreDataFeedStore: @retroactive FeedImageDataStore {
-    
-    public func insert(_ data: Data, for url: URL, completion: @escaping (InsertionResult) -> Void) {
-        
-    }
-    
-    public func retrieve(dataForURL url: URL, completion: @escaping (FeedImageDataStore.RetrievalResult) -> Void) {
-        completion(.success(.none))
-    }
-    
-}
-
 final class CoreDataFeedImageDataStoreTests: XCTestCase {
     
     func test_retrieveImageData_deliversNotFoundWhenEmpty() {
