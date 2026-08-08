@@ -34,10 +34,7 @@ class FeedImageDataLoaderWithFallbackComposite: FeedImageDataLoader {
 final class FeedImageDataLoaderWithFallbackCompositeTests: XCTestCase {
     
     func test_init_doesNotLoadImageData() {
-        let primaryLoader = LoaderSpy()
-        let fallbackLoader = LoaderSpy()
-        
-        _ = FeedImageDataLoaderWithFallbackComposite(primary: primaryLoader, fallback: fallbackLoader)
+        let (_, primaryLoader, fallbackLoader) = makeSUT()
         
         XCTAssertTrue(primaryLoader.loadedURLs.isEmpty)
         XCTAssertTrue(fallbackLoader.loadedURLs.isEmpty)
@@ -45,10 +42,7 @@ final class FeedImageDataLoaderWithFallbackCompositeTests: XCTestCase {
     
     func test_loadImageData_loadsFromPrimaryLoaderFirst() {
         let url = anyURL()
-        let primaryLoader = LoaderSpy()
-        let fallbackLoader = LoaderSpy()
-        
-        let sut = FeedImageDataLoaderWithFallbackComposite(primary: primaryLoader, fallback: fallbackLoader)
+        let (sut, primaryLoader, fallbackLoader) = makeSUT()
         
         _ = sut.loadImageData(from: url) { _ in }
         
@@ -57,6 +51,29 @@ final class FeedImageDataLoaderWithFallbackCompositeTests: XCTestCase {
     }
     
     // MARK: Helpers
+    
+    private func makeSUT(
+        file: StaticString = #filePath,
+        line: UInt = #line
+    ) -> (sut: FeedImageDataLoader, primary: LoaderSpy, fallback: LoaderSpy) {
+        let primary = LoaderSpy()
+        let fallback = LoaderSpy()
+        let sut = FeedImageDataLoaderWithFallbackComposite(primary: primary, fallback: fallback)
+        trackMemoryLeaks(primary, file: file, line: line)
+        trackMemoryLeaks(fallback, file: file, line: line)
+        trackMemoryLeaks(sut, file: file, line: line)
+        return (sut, primary, fallback)
+    }
+    
+    private func trackMemoryLeaks(
+        _ instance: AnyObject,
+        file: StaticString = #filePath,
+        line: UInt = #line
+    ) {
+        addTeardownBlock { [weak instance] in
+            XCTAssertNil(instance, "Instance should be deallocated", file: file, line: line)
+        }
+    }
     
     private func anyURL() -> URL {
         URL(string: "https://any-url.com")!
