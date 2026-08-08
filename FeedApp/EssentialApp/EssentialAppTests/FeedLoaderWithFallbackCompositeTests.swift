@@ -78,16 +78,6 @@ final class FeedLoaderWithFallbackCompositeTests: XCTestCase {
         NSError(domain: "any-domain", code: 0)
     }
     
-    private func trackMemoryLeaks(
-        _ instance: AnyObject,
-        file: StaticString = #filePath,
-        line: UInt = #line
-    ) {
-        addTeardownBlock { [weak instance] in
-            XCTAssertNil(instance, "Instance should be deallocated", file: file, line: line)
-        }
-    }
-    
     private class LoaderStub: FeedLoader {
         private let result: FeedLoader.Result
         
