@@ -34,7 +34,7 @@ public class LocalFeedLoader {
 }
 
 extension LocalFeedLoader {
-    public typealias SaveResult = Error?
+    public typealias SaveResult = Result<Void, Error>
     
     public func save(_ images: [FeedImage], completion: @escaping (SaveResult) -> Void) {
         store.deleteCachedFeed() { [weak self] result in
@@ -45,7 +45,7 @@ extension LocalFeedLoader {
                 self.insert(images.toLocal(), completion: completion)
 
             case let .failure(error):
-                completion(error)
+                completion(.failure(error))
             }
         }
     }
@@ -55,8 +55,8 @@ extension LocalFeedLoader {
             guard self != nil else { return }
             
             switch result {
-            case .success: completion(nil)
-            case .failure(let error): completion(error)
+            case .success: completion(.success(()))
+            case .failure(let error): completion(.failure(error))
             }
         }
     }
