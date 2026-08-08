@@ -24,10 +24,16 @@ public class FeedImageDataLoaderCacheDecorator: FeedImageDataLoader {
     ) -> any FeedImageDataLoaderTask {
         decoratee.loadImageData(from: url) { [weak self] result in
             completion(result.map { data in
-                self?.cache.save(data, for: url) { _ in }
+                self?.cache.saveIgnoringResult(data, for: url)
                 return data
             })
         }
     }
     
+}
+
+extension FeedImageDataCache {
+    func saveIgnoringResult(_ data: Data, for url: URL) {
+        save(data, for: url) { _ in }
+    }
 }
