@@ -10,13 +10,22 @@ import EssentialFeed
 
 class FeedLoaderWithFallbackComposite: FeedLoader {
     private let primary: FeedLoader
+    private let fallback: FeedLoader
     
     init(primary: FeedLoader, fallback: FeedLoader) {
         self.primary = primary
+        self.fallback = fallback
     }
     
     func load(completion: @escaping (FeedLoader.Result) -> Void) {
-        primary.load(completion: completion)
+        primary.load { [weak self] primaryResult in
+            switch primaryResult {
+            case let .success(primaryFeed):
+                completion(.success(primaryFeed))
+            case .failure:
+                self?.fallback.load(completion: completion)
+            }
+        }
     }
 }
 
@@ -32,6 +41,23 @@ final class FeedLoaderWithFallbackCompositeTests: XCTestCase {
             switch receivedResult {
             case let .success(receivedFeed):
                 XCTAssertEqual(receivedFeed, primaryFeed)
+            default:
+                XCTFail("Expected success got \(receivedResult) instead")
+            }
+            exp.fulfill()
+        }
+        wait(for: [exp], timeout: 1.0)
+    }
+    
+    func test_load_deliversFallbackFeedOnPrimaryLoadFailure() {
+        let fallbackFeed = uniqueFeed()
+        let sut = makeSUT(primaryResult: .failure(anyNSError()), fallbackResult: .success(fallbackFeed))
+        
+        let exp = expectation(description: "Wait for load completion")
+        sut.load { receivedResult in
+            switch receivedResult {
+            case let .success(receivedFeed):
+                XCTAssertEqual(receivedFeed, fallbackFeed)
             default:
                 XCTFail("Expected success got \(receivedResult) instead")
             }
@@ -58,7 +84,11 @@ final class FeedLoaderWithFallbackCompositeTests: XCTestCase {
     }
     
     private func uniqueFeed() -> [FeedImage] {
-        return [FeedImage(id: UUID(), description: "any", location: "any", url: URL(string: "https://any-url.com")!)]
+        [FeedImage(id: UUID(), description: "any", location: "any", url: URL(string: "https://any-url.com")!)]
+    }
+    
+    private func anyNSError() -> NSError {
+        NSError(domain: "any-domain", code: 0)
     }
     
     private func trackMemoryLeaks(
