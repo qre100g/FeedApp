@@ -98,9 +98,9 @@ final class FeedImageDataLoaderWithFallbackCompositeTests: XCTestCase {
     private func makeSUT(
         file: StaticString = #filePath,
         line: UInt = #line
-    ) -> (sut: FeedImageDataLoader, primary: LoaderSpy, fallback: LoaderSpy) {
-        let primary = LoaderSpy()
-        let fallback = LoaderSpy()
+    ) -> (sut: FeedImageDataLoader, primary: FeedImageDataLoaderSpy, fallback: FeedImageDataLoaderSpy) {
+        let primary = FeedImageDataLoaderSpy()
+        let fallback = FeedImageDataLoaderSpy()
         let sut = FeedImageDataLoaderWithFallbackComposite(primary: primary, fallback: fallback)
         trackMemoryLeaks(primary, file: file, line: line)
         trackMemoryLeaks(fallback, file: file, line: line)
@@ -135,42 +135,6 @@ final class FeedImageDataLoaderWithFallbackCompositeTests: XCTestCase {
         action()
         
         wait(for: [exp], timeout: 1.0)
-    }
-    
-    private class LoaderSpy: FeedImageDataLoader {
-        private var message = [(url: URL, completion: (FeedImageDataLoader.Result) -> Void)]()
-        
-        var loadedURLs: [URL] {
-            message.map { $0.url }
-        }
-        
-        private(set) var cancelledURLs = [URL]()
-        
-        private struct Task: FeedImageDataLoaderTask {
-            let callback: () -> Void
-            
-            func cancel() {
-                callback()
-            }
-        }
-        
-        func loadImageData(
-            from url: URL,
-            completion: @escaping (FeedImageDataLoader.Result) -> Void
-        ) -> any FeedImageDataLoaderTask {
-            message.append((url: url, completion: completion))
-            return Task { [weak self] in
-                self?.cancelledURLs.append(url)
-            }
-        }
-        
-        func complete(with error: NSError, at index: Int = 0) {
-            message[index].completion(.failure(error))
-        }
-        
-        func complete(with data: Data, at index: Int = 0) {
-            message[index].completion(.success(data))
-        }
     }
     
 }
