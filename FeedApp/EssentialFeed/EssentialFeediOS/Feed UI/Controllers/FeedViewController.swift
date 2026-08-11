@@ -19,7 +19,11 @@ public final class FeedViewController: UITableViewController, UITableViewDataSou
     
     @IBOutlet public private(set) var errorView: ErrorView?
     
-    var tableModel = [FeedImageCellController]()
+    var tableModel = [FeedImageCellController]() {
+        didSet {
+            tableView.reloadData()
+        }
+    }
     
     public override func viewDidLoad() {
         super.viewDidLoad()
