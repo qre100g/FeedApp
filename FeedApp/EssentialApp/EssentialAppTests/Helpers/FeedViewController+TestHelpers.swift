@@ -18,6 +18,10 @@ extension FeedViewController {
         return errorView?.message
     }
     
+    func renderedFeedImageData(at index: Int) -> Data? {
+        return simulateFeedImageViewVisible(at: index)?.renderedImage
+    }
+    
     func simulateViewAppearance() {
         if !isViewLoaded {
             loadViewIfNeeded()
