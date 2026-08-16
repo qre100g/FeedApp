@@ -8,6 +8,7 @@
 import XCTest
 import EssentialFeed
 import EssentialFeediOS
+import EssentialApp
 
 final class FeedUIIntegrationTests: XCTestCase {
     
@@ -353,16 +354,6 @@ final class FeedUIIntegrationTests: XCTestCase {
         url: URL = URL(string: "https://any-url.com")!
     ) -> FeedImage {
         FeedImage(id: UUID(), description: description, location: location, url: url)
-    }
-    
-    private func trackMemoryLeaks(
-        _ instance: AnyObject,
-        file: StaticString = #filePath,
-        line: UInt = #line
-    ) {
-        addTeardownBlock { [weak instance] in
-            XCTAssertNil(instance, "Instance should be deallocated", file: file, line: line)
-        }
     }
     
     private func anyImageData() -> Data {
