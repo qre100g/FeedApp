@@ -40,6 +40,12 @@ public final class FeedViewController: UITableViewController, UITableViewDataSou
         onViewAppearing?(self)
     }
     
+    public override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        tableView.sizeTableHeaderToFit()
+    }
+    
     public func display(_ cellControllers: [FeedImageCellController]) {
         tableModel = cellControllers
     }
@@ -92,4 +98,19 @@ public final class FeedViewController: UITableViewController, UITableViewDataSou
         tableModel[indexPath.row].cancel()
     }
 
+}
+
+
+extension UITableView {
+    func sizeTableHeaderToFit() {
+        guard let header = tableHeaderView else { return }
+        
+        let size = header.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize)
+        
+        let needsFrameUpdate = header.frame.height != size.height
+        if needsFrameUpdate {
+            header.frame.size.height = size.height
+            tableHeaderView = header
+        }
+    }
 }

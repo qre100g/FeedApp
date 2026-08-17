@@ -12,7 +12,7 @@ public final class ErrorView: UIView {
 
     public var message: String? {
         get { label.text }
-        set { label.text = newValue }
+        set { showAnimated(newValue) }
     }
     
     public override func awakeFromNib() {
@@ -30,7 +30,7 @@ public final class ErrorView: UIView {
         }
     }
     
-    private func showAnimated(_ message: String) {
+    private func showAnimated(_ message: String?) {
         label.text = message
 
         UIView.animate(withDuration: 0.25) {
